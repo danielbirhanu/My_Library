@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { config } from './config/index';
+import { config } from './config/config';
+import { registerRoute } from './routes';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -23,9 +24,7 @@ app.use(cors());
     });
     console.log('Successfully connected to the database.');
 
-    app.get("/health", (req: Request, res: Response) => {
-      res.status(200).json({ message: "Server is running properly!" });
-    });
+    registerRoute(app)
 
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);

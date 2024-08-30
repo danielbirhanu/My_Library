@@ -1,6 +1,5 @@
 import mongoose, {Schema, Document} from 'mongoose';
 import {IUser} from '../models/User';
-import { extend, required } from 'joi';
 
 export interface IUsesrModel extends IUser, Document {};
 
