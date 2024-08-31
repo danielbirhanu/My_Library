@@ -22,5 +22,9 @@ export const Schemas = {
       email: Joi.string().regex(/[^\r\n]+@[^\r\n]+\.[^\r\n]+/).required(),
       password: Joi.string().required(),
     }),
+    login: Joi.object<{email:string, password:string}>({
+        email: Joi.string().regex(/[^\r\n]+@[^\r\n]+\.[^\r\n]+/).required(),
+        password: Joi.string().required()
+    })
   },
 };
