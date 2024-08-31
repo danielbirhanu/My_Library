@@ -2,10 +2,10 @@ import bcrypt from 'bcrypt';
 
 import {config} from '../config/config';
 
-import UserDao, {IUsesrModel} from '../daos/UserDao';
+import UserDao, {IUserModel} from '../daos/UserDao';
 import {IUser} from '../models/User';
 
-export async function register(user:IUser):Promise<IUsesrModel>{
+export async function register(user:IUser):Promise<IUserModel>{
     const ROUNDS = config.server.rounds;
 
     try{

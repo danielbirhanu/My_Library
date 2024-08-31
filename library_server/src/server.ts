@@ -7,8 +7,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const PORT: string | number = config.server.port; // Default port
-//const MONGO_URL: string = config.mongo.url || 'mongodb://localhost:27017'; // Default MongoDB URL
+const PORT: string | number = config.server.port; 
 
 const app: Express = express();
 

@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const index_1 = require("./config/index");
+const config_1 = require("./config/config");
+const routes_1 = require("./routes");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const PORT = index_1.config.server.port; // Default port
-//const MONGO_URL: string = config.mongo.url || 'mongodb://localhost:27017'; // Default MongoDB URL
+const PORT = config_1.config.server.port;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
@@ -32,9 +32,7 @@ app.use((0, cors_1.default)());
                 authMechanism: "DEFAULT",
             });
             console.log('Successfully connected to the database.');
-            app.get("/health", (req, res) => {
-                res.status(200).json({ message: "Server is running properly!" });
-            });
+            (0, routes_1.registerRoute)(app);
             app.listen(PORT, () => {
                 console.log(`Server listening on port ${PORT}`);
             });

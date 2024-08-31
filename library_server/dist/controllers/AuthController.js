@@ -8,24 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.register = register;
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const config_1 = require("../config/config");
-const UserDao_1 = __importDefault(require("../daos/UserDao"));
-function register(user) {
+const UserService_1 = require("../services/UserService");
+function handleRegister(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const ROUNDS = config_1.config.server.rounds;
+        const user = req.body;
         try {
-            const hashedPassword = yield bcrypt_1.default.hash(user.password, ROUNDS);
-            const saved = new UserDao_1.default(Object.assign(Object.assign({}, user), { password: hashedPassword }));
-            return yield saved.save();
+            const registeredUser = yield (0, UserService_1.register)(user);
+            res.status(201).json({
+                message: "User successfully created",
+                user: {
+                    _id: registeredUser._id,
+                    _type: registeredUser.type,
+                    firstName: registeredUser.firstName,
+                    lastName: registeredUser.lastName,
+                    email: registeredUser.email,
+                }
+            });
         }
         catch (error) {
-            throw new Error("Unable to create user at this time!");
+            res.status(500).json({ message: "Unable to register user at this time", error: error.message });
         }
     });
 }
+exports.default = { handleRegister };
