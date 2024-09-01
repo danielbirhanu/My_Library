@@ -37,7 +37,7 @@ function login(credentials) {
         try {
             const user = yield UserDao_1.default.findOne({ email });
             if (!user) {
-                throw new Error("Invalid username or password");
+                throw new LibraryError_1.InvalidUsernameOrPasswordError("Invalid username or password");
             }
             else {
                 const validPassword = yield bcrypt_1.default.compare(password, user.password);
@@ -45,12 +45,12 @@ function login(credentials) {
                     return user;
                 }
                 else {
-                    throw new Error("Invalid username or password");
+                    throw new LibraryError_1.InvalidUsernameOrPasswordError("Invalid username or password");
                 }
             }
         }
         catch (error) {
-            throw new Error(error.message);
+            throw error;
         }
     });
 }
